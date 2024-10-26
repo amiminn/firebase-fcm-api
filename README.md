@@ -6,18 +6,18 @@ https://console.firebase.google.com/project/{your-project}/settings/serviceaccou
 
 - download file json dengan `generate new private key`
 
-- letakkan file di path `/src`
+- letakkan file json tersebut di path `/src`
 
-- ubah variable `PRIVATE_KEY` di `getaccesstoken.ts` menjadi nama file json yang telah terdownload
+- ubah value variable `PRIVATE_KEY` di `/src/getaccesstoken.ts` menjadi nama file json yang telah terdownload
 
 ### 2. create account role owner
+
+https://stackoverflow.com/questions/77987873/fcm-cloudmessaging-messages-create-iam-permission-denied
 
 - buat user dengan role `owner`
 - hapus user lama/sebelumnya
 
-https://stackoverflow.com/questions/77987873/fcm-cloudmessaging-messages-create-iam-permission-denied
-
-## Instalasi
+## Quick Start
 
 To install dependencies:
 
