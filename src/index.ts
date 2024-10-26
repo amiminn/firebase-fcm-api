@@ -2,6 +2,11 @@ import { Hono } from "hono";
 import { bearerToken, fcmUrl, getAccessToken } from "./getaccesstoken";
 import { logger } from "hono/logger";
 import axios from "axios";
+import { z } from "zod";
+import {
+  sendNotificationPayload,
+  sendNotificationUserPayload,
+} from "./payload";
 
 const app = new Hono();
 app.use(logger());
@@ -10,7 +15,7 @@ const TOKEN = process.env.TOKEN;
 const ANTI_DDOS_TIMER = 1; // 1 detik
 const requestTimestamps = new Map();
 
-app.use("*", (c: any, next) => {
+app.use("/api/*", (c: any, next) => {
   const secretToken = c.req.header("access-token");
 
   if (secretToken !== TOKEN) {
@@ -39,49 +44,19 @@ app.use("*", (c: any, next) => {
 });
 
 app.get("/", async (c) => {
-  return c.json({ author: "amiminn", github: "https://github.com/amiminn" });
-});
-
-app.post("/get-access-token", async (c) => {
-  try {
-    const accessToken = await getAccessToken();
-    return c.json(accessToken);
-  } catch (error) {
-    return c.json({ error });
-  }
+  return c.json({
+    github: "https://github.com/amiminn/firebase-fcm-api",
+  });
 });
 
 app.post("/api/send-notification", async (c) => {
-  const { topic, title, body, image } = await c.req.json();
-  const data = {
-    message: {
-      topic,
-      notification: {
-        title,
-        body,
-      },
-      android: {
-        notification: {
-          image,
-        },
-      },
-      apns: {
-        payload: {
-          aps: {
-            "mutable-content": 1,
-          },
-        },
-        fcm_options: {
-          image,
-        },
-      },
-      webpush: {
-        headers: {
-          image,
-        },
-      },
-    },
-  };
+  const validationResult = sendNotificationSchema.safeParse(await c.req.json());
+
+  if (!validationResult.success) {
+    return c.json({ error: validationResult.error.errors }, 400);
+  }
+  const { topic, title, body, image } = validationResult.data;
+  const data = sendNotificationPayload({ topic, title, body, image });
 
   try {
     const config = {
@@ -104,36 +79,15 @@ app.post("/api/send-notification", async (c) => {
 });
 
 app.post("/api/send-notification-user", async (c) => {
-  const { title, body, image, deviceToken } = await c.req.json();
-  const data = {
-    message: {
-      token: deviceToken,
-      notification: {
-        title,
-        body,
-      },
-      android: {
-        notification: {
-          image,
-        },
-      },
-      apns: {
-        payload: {
-          aps: {
-            "mutable-content": 1,
-          },
-        },
-        fcm_options: {
-          image,
-        },
-      },
-      webpush: {
-        headers: {
-          image,
-        },
-      },
-    },
-  };
+  const validationResult = sendNotificationUserSchema.safeParse(
+    await c.req.json()
+  );
+
+  if (!validationResult.success) {
+    return c.json({ error: validationResult.error.errors }, 400);
+  }
+  const { deviceToken, title, body, image } = validationResult.data;
+  const data = sendNotificationUserPayload({ deviceToken, title, body, image });
 
   try {
     const config = {
@@ -159,3 +113,17 @@ export default {
   port: process.env.PORT,
   fetch: app.fetch,
 };
+
+const sendNotificationSchema = z.object({
+  topic: z.string().nonempty(),
+  title: z.string().nonempty(),
+  body: z.string().nonempty(),
+  image: z.string().url().optional(),
+});
+
+const sendNotificationUserSchema = z.object({
+  deviceToken: z.string().nonempty(),
+  title: z.string().nonempty(),
+  body: z.string().nonempty(),
+  image: z.string().url().optional(),
+});
