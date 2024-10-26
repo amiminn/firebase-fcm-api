@@ -71,7 +71,9 @@ body
 
 kirim notifikasi ke spesifik device pengguna dengan key deviceToken
 
-doc: [Lihat dokumentasi firebase](https://firebase.google.com/docs/cloud-messaging/migrate-v1?hl=en&authuser=0#example_targeting_specific_devices)
+doc: 
+- [Lihat dokumentasi firebase](https://firebase.google.com/docs/cloud-messaging/migrate-v1?hl=en&authuser=0#example_targeting_specific_devices)
+- [Medium: lifecycle-of-fcm-device-tokens](https://medium.com/@chunilalkukreja/lifecycle-of-fcm-device-tokens-61681bb6fbcf)
 
 url endpoint
 
