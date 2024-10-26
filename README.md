@@ -1,11 +1,99 @@
+## Setup
+
+### 1. generate sdk key
+
+https://console.firebase.google.com/project/{your-project}/settings/serviceaccounts/adminsdk
+
+- download file json dengan `generate new private key`
+
+- letakkan file di path `/src`
+
+- ubah variable `PRIVATE_KEY` di `getaccesstoken.ts` menjadi nama file json yang telah terdownload
+
+### 2. create account role owner
+
+- buat user dengan role `owner`
+- hapus user lama/sebelumnya
+
+https://stackoverflow.com/questions/77987873/fcm-cloudmessaging-messages-create-iam-permission-denied
+
+## Instalasi
+
 To install dependencies:
+
 ```sh
 bun install
 ```
 
 To run:
+
 ```sh
 bun run dev
 ```
 
 open http://localhost:3000
+
+## Api
+
+### Kirim Notifikasi ke Semua Perangkat
+
+kirim notifikasi ke semua pengguna dengan key topic
+
+doc: [Lihat dokumentasi firebase](https://firebase.google.com/docs/cloud-messaging/migrate-v1?hl=en&authuser=0#example-targeting-multiple-platforms).
+
+url endpoint
+
+```sh
+http://localhost:3000/api/send-notification
+```
+
+header _(ubah access-token di .env)_
+
+```sh
+Content-Type: application/json
+access-token: jUJncRrngRCMCf...
+```
+
+body
+
+```sh
+
+{
+    "topic":"all",
+    "title":"Hello Wi - bu!",
+    "body": "Yo, this is your waifu.",
+    "image":"https://i.pinimg.com/474x/8c/46/22/8c4622b18c2f21da2e3e09ddde3ade9e.jpg" //opsional
+}
+
+```
+
+### Kirim Notifikasi ke Spesifik Prangkat
+
+kirim notifikasi ke spesifik device pengguna dengan key deviceToken
+
+doc: [Lihat dokumentasi firebase](https://firebase.google.com/docs/cloud-messaging/migrate-v1?hl=en&authuser=0#example_targeting_specific_devices)
+
+url endpoint
+
+```sh
+http://localhost:3000/api/send-notification
+```
+
+header _(ubah access-token di .env)_
+
+```sh
+Content-Type: application/json
+access-token: jUJncRrngRCMCf...
+```
+
+body
+
+```sh
+{
+    "deviceToken":"dRGha1saSi62i8S5Q6...",
+    "title":"Hello Wi - bu!",
+    "body": "Yo, this is your waifu.",
+    "image":"https://i.pinimg.com/474x/8c/46/22/8c4622b18c2f21da2e3e09ddde3ade9e.jpg" //opsional
+}
+
+```

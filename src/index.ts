@@ -7,6 +7,7 @@ import {
   sendNotificationPayload,
   sendNotificationUserPayload,
 } from "./payload";
+import { responseFailed, responseSuccess } from "./response";
 
 const app = new Hono();
 app.use(logger());
@@ -65,16 +66,10 @@ app.post("/api/send-notification", async (c) => {
       },
     };
     const res = await axios.post(fcmUrl, data, config);
-    return c.json({ success: true, msg: "Notifikasi berhasil terkirim." });
+    return c.json(responseSuccess);
   } catch (error) {
     await getAccessToken();
-    return c.json(
-      {
-        success: false,
-        msg: "Notifikasi gagal terkirim, silahkan cobalagi.",
-      },
-      400
-    );
+    return c.json(responseFailed, 400);
   }
 });
 
@@ -96,16 +91,10 @@ app.post("/api/send-notification-user", async (c) => {
       },
     };
     const res = await axios.post(fcmUrl, data, config);
-    return c.json({ success: true, msg: "Notifikasi berhasil terkirim." });
+    return c.json(responseSuccess);
   } catch (error) {
     await getAccessToken();
-    return c.json(
-      {
-        success: false,
-        msg: "Notifikasi gagal terkirim, silahkan cobalagi.",
-      },
-      400
-    );
+    return c.json(responseFailed, 400);
   }
 });
 
@@ -115,15 +104,15 @@ export default {
 };
 
 const sendNotificationSchema = z.object({
-  topic: z.string().nonempty(),
-  title: z.string().nonempty(),
-  body: z.string().nonempty(),
+  topic: z.string({ required_error: "Topic is required" }),
+  title: z.string({ required_error: "Title is required" }),
+  body: z.string({ required_error: "Body is required" }),
   image: z.string().url().optional(),
 });
 
 const sendNotificationUserSchema = z.object({
-  deviceToken: z.string().nonempty(),
-  title: z.string().nonempty(),
-  body: z.string().nonempty(),
+  deviceToken: z.string({ required_error: "Device Token is required" }),
+  title: z.string({ required_error: "Title is required" }),
+  body: z.string({ required_error: "Body is required" }),
   image: z.string().url().optional(),
 });
