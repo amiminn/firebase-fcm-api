@@ -98,6 +98,10 @@ app.post("/api/send-notification-user", async (c) => {
   }
 });
 
+app.all("*", (c) => {
+  return c.json({ message: "404 Not Found" }, 404);
+});
+
 export default {
   port: process.env.PORT,
   fetch: app.fetch,
