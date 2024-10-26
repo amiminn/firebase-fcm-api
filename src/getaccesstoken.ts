@@ -2,7 +2,7 @@ import { GoogleAuth } from "google-auth-library";
 import path from "path";
 import fs from "fs/promises";
 
-const PRIVATE_KEY = "console-f5aa1-firebase-adminsdk-6gtun-7e984aeb2b.json";
+const PRIVATE_KEY = "project-fjsa1-firebase-adminsdk-6gtsk-7e984o2h2b.json";
 
 const SCOPES = ["https://www.googleapis.com/auth/cloud-platform"];
 const filePath = path.join(__dirname, "accesstoken.json");
