@@ -1,7 +1,7 @@
 {
   "name": "firebase-fcm-api",
   "author": "amiminn",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Firebase Cloud Messaging API",
   "scripts": {
     "dev": "bun run --hot src/index.ts"
