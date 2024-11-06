@@ -12,7 +12,7 @@ interface FcmTypeRequest {
 }
 
 interface FcmUserTypeRequest {
-  deviceToken: string;
+  token: string;
   title: string;
   body: string;
   image?: string;
@@ -48,7 +48,7 @@ export async function FcmSendNotification({
 }
 
 export async function FcmSendNotificationUser({
-  deviceToken,
+  token,
   title,
   body,
   image,
@@ -59,7 +59,7 @@ export async function FcmSendNotificationUser({
       body,
       image,
     },
-    token: deviceToken,
+    token,
   };
 
   try {

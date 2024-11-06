@@ -75,10 +75,10 @@ app.post("/api/send-notification-user", async (c) => {
   if (!validationResult.success) {
     return c.json({ error: validationResult.error.errors }, 400);
   }
-  const { deviceToken, title, body, image } = validationResult.data;
+  const { token, title, body, image } = validationResult.data;
 
   try {
-    const data = { deviceToken, title, body, image };
+    const data = { token, title, body, image };
     await FcmSendNotificationUser(data);
 
     return c.json(responseSuccess);
@@ -104,7 +104,7 @@ const sendNotificationSchema = z.object({
 });
 
 const sendNotificationUserSchema = z.object({
-  deviceToken: z.string({ required_error: "Device Token is required" }),
+  token: z.string({ required_error: "Device Token is required" }),
   title: z.string({ required_error: "Title is required" }),
   body: z.string({ required_error: "Body is required" }),
   image: z.string().url().optional(),

@@ -95,7 +95,7 @@ body
 
 ```sh
 {
-    "deviceToken":"dRGha1saSi62i8S5Q6...",
+    "token":"dRGha1saSi62i8S5Q6...",
     "title":"Hello Wi - bu!",
     "body": "Yo, this is your waifu.",
     "image":"https://i.pinimg.com/474x/8c/46/22/8c4622b18c2f21da2e3e09ddde3ade9e.jpg" //opsional
