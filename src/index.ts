@@ -1,13 +1,12 @@
 import { Hono } from "hono";
-import { bearerToken, fcmUrl, getAccessToken } from "./getaccesstoken";
 import { logger } from "hono/logger";
-import axios from "axios";
 import { z } from "zod";
 import {
-  sendNotificationPayload,
-  sendNotificationUserPayload,
-} from "./payload";
-import { responseFailed, responseSuccess } from "./response";
+  FcmSendNotification,
+  FcmSendNotificationUser,
+  responseFailed,
+  responseSuccess,
+} from "./utils";
 
 const app = new Hono();
 app.use(logger());
@@ -57,18 +56,13 @@ app.post("/api/send-notification", async (c) => {
     return c.json({ error: validationResult.error.errors }, 400);
   }
   const { topic, title, body, image } = validationResult.data;
-  const data = sendNotificationPayload({ topic, title, body, image });
 
   try {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + (await bearerToken()),
-      },
-    };
-    const res = await axios.post(fcmUrl, data, config);
+    const data = { topic, title, body, image };
+    await FcmSendNotification(data);
+
     return c.json(responseSuccess);
   } catch (error) {
-    await getAccessToken();
     return c.json(responseFailed, 400);
   }
 });
@@ -82,18 +76,13 @@ app.post("/api/send-notification-user", async (c) => {
     return c.json({ error: validationResult.error.errors }, 400);
   }
   const { deviceToken, title, body, image } = validationResult.data;
-  const data = sendNotificationUserPayload({ deviceToken, title, body, image });
 
   try {
-    const config = {
-      headers: {
-        Authorization: "Bearer " + (await bearerToken()),
-      },
-    };
-    const res = await axios.post(fcmUrl, data, config);
+    const data = { deviceToken, title, body, image };
+    await FcmSendNotificationUser(data);
+
     return c.json(responseSuccess);
   } catch (error) {
-    await getAccessToken();
     return c.json(responseFailed, 400);
   }
 });

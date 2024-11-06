@@ -8,7 +8,9 @@ https://console.firebase.google.com/project/{your-project}/settings/serviceaccou
 
 - letakkan file json tersebut di path `/src`
 
-- ubah value variable `PRIVATE_KEY` di `/src/getaccesstoken.ts` menjadi nama file json yang telah terdownload
+- hapus file example `project-fjsa1-firebase-adminsdk-6gtsk-7e984o2h2b.json`
+
+- ubah value variable `PRIVATE_KEY` di `/src/utils.ts` menjadi nama file json yang telah terdownload
 
 ### 2. create account role owner
 
@@ -71,7 +73,8 @@ body
 
 kirim notifikasi ke spesifik device pengguna dengan key deviceToken
 
-doc: 
+doc:
+
 - [Lihat dokumentasi firebase](https://firebase.google.com/docs/cloud-messaging/migrate-v1?hl=en&authuser=0#example_targeting_specific_devices)
 - [Medium: lifecycle-of-fcm-device-tokens](https://medium.com/@chunilalkukreja/lifecycle-of-fcm-device-tokens-61681bb6fbcf)
 
