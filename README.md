@@ -37,6 +37,8 @@ open http://localhost:3000
 
 ## Api
 
+dokumentasi api: [Lihat dokumentasi (postman)](https://documenter.getpostman.com/view/22245737/2sAY517fUH).
+
 ### Kirim Notifikasi ke Semua Perangkat
 
 kirim notifikasi ke semua pengguna dengan key topic
@@ -81,7 +83,7 @@ doc:
 url endpoint
 
 ```sh
-http://localhost:3000/api/send-notification
+http://localhost:3000/api/send-notification-user
 ```
 
 header _(ubah access-token di .env)_
