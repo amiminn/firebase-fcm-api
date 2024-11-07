@@ -55,11 +55,11 @@ app.post("/api/send-notification", async (c) => {
   if (!validationResult.success) {
     return c.json({ error: validationResult.error.errors }, 400);
   }
-  const { topic, title, body, image } = validationResult.data;
+  const { topic, title, body, image, data } = validationResult.data;
 
   try {
-    const data = { topic, title, body, image };
-    await FcmSendNotification(data);
+    const payload = { topic, title, body, image, data };
+    await FcmSendNotification(payload);
 
     return c.json(responseSuccess);
   } catch (error) {
@@ -75,11 +75,11 @@ app.post("/api/send-notification-user", async (c) => {
   if (!validationResult.success) {
     return c.json({ error: validationResult.error.errors }, 400);
   }
-  const { token, title, body, image } = validationResult.data;
+  const { token, title, body, image, data } = validationResult.data;
 
   try {
-    const data = { token, title, body, image };
-    await FcmSendNotificationUser(data);
+    const payload = { token, title, body, image, data };
+    await FcmSendNotificationUser(payload);
 
     return c.json(responseSuccess);
   } catch (error) {
@@ -101,6 +101,7 @@ const sendNotificationSchema = z.object({
   title: z.string({ required_error: "Title is required" }),
   body: z.string({ required_error: "Body is required" }),
   image: z.string().url().optional(),
+  data: z.record(z.string(), z.any()).optional(),
 });
 
 const sendNotificationUserSchema = z.object({
@@ -108,4 +109,5 @@ const sendNotificationUserSchema = z.object({
   title: z.string({ required_error: "Title is required" }),
   body: z.string({ required_error: "Body is required" }),
   image: z.string().url().optional(),
+  data: z.record(z.string(), z.any()).optional(),
 });

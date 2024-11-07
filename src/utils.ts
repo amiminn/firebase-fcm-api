@@ -9,6 +9,7 @@ interface FcmTypeRequest {
   title: string;
   body: string;
   image?: string;
+  data?: {};
 }
 
 interface FcmUserTypeRequest {
@@ -16,6 +17,7 @@ interface FcmUserTypeRequest {
   title: string;
   body: string;
   image?: string;
+  data?: {};
 }
 
 admin.initializeApp({
@@ -27,6 +29,7 @@ export async function FcmSendNotification({
   title,
   body,
   image,
+  data,
 }: FcmTypeRequest) {
   const message = {
     topic,
@@ -35,6 +38,7 @@ export async function FcmSendNotification({
       body,
       image,
     },
+    data,
   };
 
   try {
@@ -52,6 +56,7 @@ export async function FcmSendNotificationUser({
   title,
   body,
   image,
+  data,
 }: FcmUserTypeRequest) {
   const message = {
     notification: {
@@ -60,6 +65,7 @@ export async function FcmSendNotificationUser({
       image,
     },
     token,
+    data,
   };
 
   try {
