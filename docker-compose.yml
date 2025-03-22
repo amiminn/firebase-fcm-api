@@ -1,0 +1,14 @@
+services:
+  hono-app:
+    container_name: firebase-fcm-api
+    build: .
+    ports:
+      - "92:3001" # Mengarahkan domain ke port 92
+    restart: always
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: >
+      sh -c "bun install && bun run dev"
+    environment:
+      NODE_ENV: production
