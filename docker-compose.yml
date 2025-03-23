@@ -1,14 +1,19 @@
 services:
   hono-app:
-    container_name: firebase-fcm-api
     build: .
+    container_name: firebase-fcm-api
     ports:
-      - "92:3001" # Mengarahkan domain ke port 92
+      - "92:3000"
     restart: always
     volumes:
       - .:/app
       - /app/node_modules
-    command: >
-      sh -c "bun install && bun run dev"
     environment:
-      NODE_ENV: production
+      DATABASE_URL: mysql://amiminn:amiminn@mariadb_container:3306/fcm_api
+    command: >
+      sh -c "bun install && bun run prisma migrate deploy && bun run dev"
+
+networks:
+  default:
+    name: amiminn_network
+    external: true
