@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import { DeviceRow, sql } from "@/lib/db";
 import { responseError, responseSuccess } from "@/lib/response";
 import { Context } from "hono";
 import { z } from "zod";
@@ -17,20 +17,31 @@ export async function createDevice(c: Context) {
       return c.json(result.error, 400);
     }
 
-    const device = await db.device.findUnique({
-      where: {
-        deviceKey: result.data.deviceKey,
-      },
-    });
+    const devices = (await sql`
+      SELECT *
+      FROM "Device"
+      WHERE "deviceKey" = ${result.data.deviceKey}
+      LIMIT 1
+    `) as DeviceRow[];
+    const [device] = devices;
 
     if (!device) {
-      await db.device.create({
-        data: {
-          token: result.data.token,
-          topic: result.data.topic,
-          deviceKey: result.data.deviceKey,
-        },
-      });
+      await sql`
+        INSERT INTO "Device" (
+          "id",
+          "deviceKey",
+          "token",
+          "topic",
+          "updatedAt"
+        )
+        VALUES (
+          ${crypto.randomUUID()},
+          ${result.data.deviceKey},
+          ${result.data.token},
+          ${result.data.topic},
+          CURRENT_TIMESTAMP
+        )
+      `;
 
       return c.json(responseSuccess("device baru dibuat."), 201);
     }

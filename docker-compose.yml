@@ -9,9 +9,9 @@ services:
       - .:/app
       - /app/node_modules
     environment:
-      DATABASE_URL: mysql://amiminn:amiminn@mariadb_container:3306/fcm_api
+      DATABASE_URL: ${DATABASE_URL}
     command: >
-      sh -c "bun install && bun run prisma migrate deploy && bun run dev"
+      sh -c "bun install && bun run db:migrate && bun run dev"
 
 networks:
   default:

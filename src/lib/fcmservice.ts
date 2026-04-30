@@ -1,8 +1,8 @@
-import path from "path";
 import admin from "firebase-admin";
+import path from "path";
 
 const PRIVATE_KEY =
-  "fcm/iot-project-9314c-firebase-adminsdk-fbsvc-0fdb67a7a8.json";
+  "fcm/flowworks-warehouse-firebase-adminsdk-fbsvc-8285ef3b03.json";
 const serviceAccountPath = path.join(__dirname, PRIVATE_KEY);
 
 interface FcmTypeRequest {

@@ -30,8 +30,11 @@ bun install
 To run:
 
 ```sh
+bun run db:migrate
 bun run dev
 ```
+
+Migration SQL disimpan di folder `migrations/` dan dijalankan dengan `bun run db:migrate`.
 
 open http://localhost:3001
 
