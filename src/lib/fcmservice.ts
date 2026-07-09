@@ -2,7 +2,7 @@ import admin from "firebase-admin";
 import path from "path";
 
 const PRIVATE_KEY =
-  "fcm/flowworks-warehouse-firebase-adminsdk-fbsvc-8285ef3b03.json";
+  "fcm/warehouse-irflow-firebase-adminsdk-fbsvc-2ad623d1a2.json";
 const serviceAccountPath = path.join(__dirname, PRIVATE_KEY);
 
 interface FcmTypeRequest {
@@ -48,7 +48,7 @@ export async function FcmSendNotification({
     return response;
   } catch (error) {
     console.error("error: " + error);
-    return error;
+    throw error;
   }
 }
 
@@ -75,7 +75,7 @@ export async function FcmSendNotificationUser({
     return response;
   } catch (error) {
     console.error("error: " + error);
-    return error;
+    throw error;
   }
 }
 

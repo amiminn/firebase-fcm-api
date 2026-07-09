@@ -2,9 +2,6 @@ import { Hono } from "hono";
 import { routes } from "./routes";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
-import { ensureDatabase } from "./lib/db";
-
-await ensureDatabase();
 
 const app = new Hono();
 

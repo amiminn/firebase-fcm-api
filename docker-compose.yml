@@ -8,10 +8,8 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
-    environment:
-      DATABASE_URL: ${DATABASE_URL}
     command: >
-      sh -c "bun install && bun run db:migrate && bun run dev"
+      sh -c "bun install && bun run dev"
 
 networks:
   default:

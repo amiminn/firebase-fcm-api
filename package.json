@@ -1,8 +1,7 @@
 {
   "name": "fcm-api",
   "scripts": {
-    "dev": "bun run --hot src/index.ts",
-    "db:migrate": "bun run src/scripts/migrate.ts"
+    "dev": "bun run --hot src/index.ts"
   },
   "dependencies": {
     "firebase-admin": "^13.1.0",

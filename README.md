@@ -30,13 +30,11 @@ bun install
 To run:
 
 ```sh
-bun run db:migrate
 bun run dev
 ```
 
-Migration SQL disimpan di folder `migrations/` dan dijalankan dengan `bun run db:migrate`.
 
-open http://localhost:3001
+open http://localhost:10001
 
 ## Api
 
@@ -51,7 +49,7 @@ doc: [Lihat dokumentasi firebase](https://firebase.google.com/docs/cloud-messagi
 url endpoint
 
 ```sh
-http://localhost:3001/api/send-notification
+http://localhost:10001/api/fcm/send-notification
 ```
 
 header _(ubah access-token di .env)_
@@ -89,7 +87,7 @@ doc:
 url endpoint
 
 ```sh
-http://localhost:3001/api/send-notification-user
+http://localhost:10001/api/fcm/send-notification-user
 ```
 
 header _(ubah access-token di .env)_
